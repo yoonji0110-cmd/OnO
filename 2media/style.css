@@ -1,0 +1,912 @@
+/* ===========================
+   RESET
+=========================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #000;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+}
+
+
+/* ===========================
+   APP
+=========================== */
+
+#app {
+
+    position: relative;
+
+    width: 100vw;
+    height: 100vh;
+
+    overflow: hidden;
+
+}
+
+
+/* ===========================
+   CAMERA
+=========================== */
+
+#video {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transform: scaleX(-1);
+
+    z-index: 1;
+
+}
+
+
+/* ===========================
+   THREE.JS
+=========================== */
+
+#threeCanvas {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 2;
+
+    pointer-events: none;
+
+    transform: scaleX(-1);
+
+}
+
+
+/* ===========================
+   FACE TRACKING
+=========================== */
+
+#overlayCanvas {
+
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 3;
+
+    pointer-events: none;
+
+    transform: scaleX(-1);
+
+}
+
+
+/* ==================================================
+   HEADER
+================================================== */
+
+#topHeader {
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    padding:
+        24px 5vw;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    z-index: 10;
+
+}
+
+
+/* ==================================================
+   BRAND AREA
+   로고 + 스튜디오 이름
+================================================== */
+
+.brandArea {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 24px;
+
+}
+
+
+/* ==================================================
+   LOGO
+================================================== */
+
+.logo {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 140px;
+
+    padding: 0;
+
+    background: transparent;
+
+}
+
+
+.logo img {
+
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    object-fit: contain;
+
+}
+
+
+/* ==================================================
+   BRAND TITLE
+================================================== */
+
+.brandTitle {
+
+    color: #ffffff;
+
+    font-size: 20px;
+
+    font-weight: 800;
+
+    letter-spacing: -0.8px;
+
+    white-space: nowrap;
+
+    text-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.35);
+
+}
+
+
+/* ==================================================
+   STOP BUTTON
+================================================== */
+
+.closeButton {
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        rgba(255, 255, 255, 0.65);
+
+    backdrop-filter:
+        blur(10px);
+
+    -webkit-backdrop-filter:
+        blur(10px);
+
+    color: #111;
+
+    font-size: 18px;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+
+}
+
+
+.closeButton:hover {
+
+    background: white;
+
+    transform:
+        scale(1.05);
+
+}
+
+
+.closeButton:active {
+
+    transform:
+        scale(0.95);
+
+}
+
+
+/* ==================================================
+   START BUTTON
+================================================== */
+
+#startBtn {
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    z-index: 30;
+
+    padding:
+        16px 38px;
+
+    border: none;
+
+    border-radius: 999px;
+
+    background: white;
+
+    color: #111;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0, 0, 0, 0.2);
+
+    transition:
+        0.2s ease;
+
+}
+
+
+#startBtn:hover {
+
+    background: #6C9F81;
+
+    color: white;
+
+    transform:
+        translate(-50%, -50%)
+        scale(1.05);
+
+}
+
+
+/* ==================================================
+   MASCOT AREA
+   오른쪽 아래 그래픽 영역
+================================================== */
+
+#mascotArea {
+
+    position: absolute;
+
+    right: 2.5vw;
+
+    bottom: 55px;
+
+    width: 390px;
+
+    height: 390px;
+
+    z-index: 15;
+
+    pointer-events: none;
+
+}
+
+
+/* ==================================================
+   MASCOT BACKGROUND
+================================================== */
+
+#mascotArea::before {
+
+    content: "";
+
+    position: absolute;
+
+    right: -60px;
+
+    bottom: -80px;
+
+    width: 390px;
+    height: 390px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,0.10) 0%,
+            rgba(255,255,255,0.04) 45%,
+            rgba(255,255,255,0) 72%
+        );
+
+    z-index: -1;
+
+}
+
+
+/* ==================================================
+   SPEECH
+   마스코트 머리 쪽으로 이동
+================================================== */
+
+.speechBubble {
+
+    position: absolute;
+
+    /*
+        기존 0에서 조금 아래로 내리고
+        캐릭터 쪽으로 이동
+    */
+    top: 45px;
+
+    left: 5px;
+
+    max-width: 220px;
+
+    padding:
+        14px 20px;
+
+    border-radius:
+        22px
+        22px
+        6px
+        22px;
+
+    background:
+        rgba(255,255,255,0.94);
+
+    color: #222;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    line-height: 1.5;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,0.12);
+
+    z-index: 5;
+
+    /*
+        말풍선도 아주 살짝 기울여
+        마스코트와 자연스럽게 연결
+    */
+    transform:
+        rotate(-2deg);
+
+}
+
+
+/* ==================================================
+   MASCOT
+   왼쪽으로 살짝 기울인 상태
+================================================== */
+
+#mascot {
+
+    position: absolute;
+
+    right: -0px;
+
+    bottom: -55px;
+
+    width: 340px;
+    height: 340px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    /*
+        핵심:
+        캐릭터 전체를 왼쪽으로 살짝 기울임
+    */
+    transform:
+        rotate(0deg);
+
+    transform-origin:
+        center center;
+
+    filter:
+        drop-shadow(
+            0 18px 28px
+            rgba(0,0,0,0.18)
+        );
+
+}
+
+
+/* ==================================================
+   MASCOT IMAGE
+================================================== */
+
+#mascot img {
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+}
+
+
+/* ==================================================
+   GLASSES UI
+   왼쪽 세로 패널
+================================================== */
+
+#glassesUI {
+
+    position: absolute;
+
+    left: 5vw;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    z-index: 20;
+
+    width: 105px;
+
+    padding:
+        16px 12px;
+
+    border-radius: 24px;
+
+    background:
+        rgba(255,255,255,0.78);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+
+    box-shadow:
+        0 12px 40px
+        rgba(0,0,0,0.15);
+
+}
+
+
+/* ==================================================
+   TITLE
+================================================== */
+
+.uiTitle {
+
+    margin-bottom: 12px;
+
+    color: #555;
+
+    text-align: center;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.5px;
+
+}
+
+
+/* ==================================================
+   LIST
+================================================== */
+
+.glassesList {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 8px;
+
+    width: 100%;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    scrollbar-width: none;
+
+}
+
+
+.glassesList::-webkit-scrollbar {
+
+    display: none;
+
+}
+
+
+/* ==================================================
+   BUTTON
+================================================== */
+
+.glassesButton {
+
+    width: 78px;
+
+    min-width: 78px;
+
+    padding:
+        10px 6px;
+
+    border:
+        1px solid
+        rgba(0,0,0,0.08);
+
+    border-radius: 17px;
+
+    background:
+        rgba(255,255,255,0.55);
+
+    color: #444;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+/* ==================================================
+   ICON
+================================================== */
+
+.glassesIcon {
+
+    display: block;
+
+    margin-bottom: 5px;
+
+    font-size: 24px;
+
+    line-height: 1;
+
+}
+
+
+/* ==================================================
+   NAME
+================================================== */
+
+.glassesName {
+
+    display: block;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+}
+
+
+/* ==================================================
+   HOVER
+================================================== */
+
+.glassesButton:hover {
+
+    background: white;
+
+    transform:
+        translateX(3px);
+
+}
+
+
+/* ==================================================
+   ACTIVE
+================================================== */
+
+.glassesButton.active {
+
+    background: #111;
+
+    color: white;
+
+    border-color: #111;
+
+    transform:
+        translateX(3px);
+
+    box-shadow:
+        0 7px 18px
+        rgba(0,0,0,0.18);
+
+}
+
+
+/* ==================================================
+   MOBILE
+================================================== */
+
+@media (max-width: 600px) {
+
+
+    /* ===========================
+       HEADER
+    =========================== */
+
+    #topHeader {
+
+        padding:
+            16px 18px;
+
+    }
+
+
+    /* ===========================
+       BRAND
+    =========================== */
+
+    .brandArea {
+
+        gap: 12px;
+
+    }
+
+
+    .logo {
+
+        width: 100px;
+
+    }
+
+
+    .brandTitle {
+
+        font-size: 13px;
+
+        font-weight: 800;
+
+        letter-spacing: -0.5px;
+
+    }
+
+
+    .closeButton {
+
+        width: 38px;
+
+        height: 38px;
+
+        font-size: 16px;
+
+    }
+
+
+    /* ===========================
+       MASCOT AREA
+    =========================== */
+
+    #mascotArea {
+
+        right: 0;
+
+        bottom: 45px;
+
+        width: 230px;
+
+        height: 230px;
+
+    }
+
+
+    #mascotArea::before {
+
+        right: -40px;
+
+        bottom: -50px;
+
+        width: 250px;
+
+        height: 250px;
+
+    }
+
+
+   /* ===========================
+   SPEECH BUBBLE
+   마스코트 아래쪽으로 이동
+=========================== */
+
+    .speechBubble {
+
+    position: absolute;
+
+    top: auto;
+    left: auto;
+
+    /*
+        마스코트 아래쪽
+    */
+    right: 20px;
+    bottom: -10px;
+
+    max-width: 220px;
+
+    padding:
+        14px 20px;
+
+    border-radius:
+        22px
+        22px
+        22px
+        6px;
+
+    background:
+        rgba(255,255,255,0.94);
+
+    color: #222;
+
+    font-size: 14px;
+
+    font-weight: 500;
+
+    line-height: 1.5;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,0.12);
+
+    z-index: 3;
+}
+
+
+    /* ===========================
+       MASCOT
+    =========================== */
+
+    #mascot {
+
+        right: -25px;
+
+        bottom: -35px;
+
+        width: 210px;
+
+        height: 210px;
+
+        transform:
+            rotate(-8deg);
+
+    }
+
+
+    /* ===========================
+       GLASSES UI
+    =========================== */
+
+    #glassesUI {
+
+        left: 12px;
+
+        top: 50%;
+
+        width: 82px;
+
+        padding:
+            12px 7px;
+
+        border-radius: 20px;
+
+    }
+
+
+    .uiTitle {
+
+        font-size: 8px;
+
+        margin-bottom: 9px;
+
+    }
+
+
+    .glassesButton {
+
+        width: 64px;
+
+        min-width: 64px;
+
+        padding:
+            8px 4px;
+
+        border-radius: 14px;
+
+    }
+
+
+    .glassesIcon {
+
+        font-size: 20px;
+
+        margin-bottom: 4px;
+
+    }
+
+
+    .glassesName {
+
+        font-size: 9px;
+
+    }
+
+}
